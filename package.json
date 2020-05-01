@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:env": "node -r dotenv/config dist/main",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "eslint \"src/**/*.+(ts|js)\""
   },
   "repository": {
     "type": "git",
@@ -39,6 +39,9 @@
   "devDependencies": {
     "@types/node": "^13.13.4",
     "@types/superagent": "^4.1.7",
-    "ts-node": "^8.9.1"
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "eslint": "^6.8.0",
+    "typescript": "^3.8.3"
   }
 }
