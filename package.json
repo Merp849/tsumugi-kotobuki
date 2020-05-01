@@ -2,9 +2,10 @@
   "name": "tsumugi-kotobuki",
   "version": "1.0.0",
   "description": "A discord bot template using typescript decorator",
-  "main": "index.js",
+  "main": "dist/main.js",
   "scripts": {
     "start:env": "node -r dotenv/config dist/main",
+    "build": "npm run test && rm -rf dist && tsc",
     "test": "eslint \"src/**/*.+(ts|js)\""
   },
   "repository": {
