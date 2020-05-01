@@ -1,0 +1,44 @@
+{
+  "name": "tsumugi-kotobuki",
+  "version": "1.0.0",
+  "description": "A discord bot template using typescript decorator",
+  "main": "index.js",
+  "scripts": {
+    "start:env": "node -r dotenv/config dist/main",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KurokuTetsuya/tsumugi-kotobuki.git"
+  },
+  "keywords": [
+    "decorator",
+    "typescript",
+    "discord",
+    "nodejs"
+  ],
+  "author": "Fatir",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/KurokuTetsuya/tsumugi-kotobuki/issues"
+  },
+  "homepage": "https://github.com/KurokuTetsuya/tsumugi-kotobuki#readme",
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "discord.js": "github:discordjs/discord.js",
+    "superagent": "^5.2.2",
+    "winston": "^3.2.1"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.1",
+    "dotenv": "^8.2.0",
+    "erlpack": "github:discordapp/erlpack",
+    "utf-8-validate": "^5.0.2",
+    "zlib-sync": "^0.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.4",
+    "@types/superagent": "^4.1.7",
+    "ts-node": "^8.9.1"
+  }
+}
