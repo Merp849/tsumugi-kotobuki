@@ -3,6 +3,7 @@ import { MetaCommand, CommandComponent, ModuleConf, HelpMeta } from "../typings"
 import { Collection } from "discord.js";
 import { readdir } from "fs";
 import { LogWrapper } from "./LogWrapper";
+import { resolve } from "path";
 
 export const commands: Collection<string, CommandComponent> = new Collection();
 export const aliases: Collection<string, string> = new Collection();
@@ -37,8 +38,21 @@ export default class Commands {
                     this.client.log.info(`Found ${files.filter(file => regex.exec(file) !== null).length} command(s) from ${category}`);
                     if (err) this.client.log.error("MODULES_LOADER_ERR: ", err);
                     files.forEach(file => {
-                        if (!file.endsWith(".js") && !file.endsWith(".ts")) return undefined;
-                        const prop: CommandComponent = new (require(`${this.path}/${category}/${file}`).default)(this.client, { name: file.split("Command")[0].toLowerCase(), path: `${this.path}/${category}/${file}` });
+                        if (!file.endsWith(".js")) return undefined;
+                        require(`${this.path}/${category}/${file}`).default;
+                        const cmd = commands.get(file.split('Command')[0].toLowerCase());
+                        if (!cmd) {
+                            const errr = new Error();
+                            errr.name = 'ANOMALY_COMMAND_FILENAME';
+                            errr.message = `[${file}] command file is not found in ${resolve(__dirname, `../commands/${category}/${file}`)}`;
+                            throw errr;
+                        }
+                        const prop: CommandComponent = new (require(`${this.path}/${category}/${file}`).default)(this.client, { 
+                            name: cmd!.meta!.name, 
+                            path: `${this.path}/${category}/${file}` 
+                        });
+                        cmd!.meta!.path = `${this.path}/${category}/${file}`;
+                        prop.meta = cmd!.meta;
                         commands.set(prop.meta!.name, prop);
                         moduleConf.cmds.push(prop.meta!.name);
                     });
@@ -54,9 +68,9 @@ export function Command(value: MetaCommand) {
         const disabledCommands: string[] = [];
         if (value.disabled) disabledCommands.push(value.name);
         if (disabledCommands.length !== 0) log.info(`There are ${disabledCommands.length} command(s) disabled.`);
-        value.alias.forEach(alias => {
+        value.alias!.forEach(alias => {
             aliases.set(alias, value.name);
         });
-        commands.set(value.name, { run: new target(), meta: value });
+        commands.set(value.name, { run: new target(undefined, value), meta: value });
     };
 }

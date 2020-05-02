@@ -8,7 +8,6 @@ export default class CommandHandler {
 
     public handle(message: IMessage): any {
         const command: CommandComponent | void = this.client.commands.get(message.cmd) || this.client.commands.get(this.client.aliases.get(message.cmd)!);
-        console.log(command);
         if (!command || command.meta!.disabled) return undefined;
         if (!this.cooldowns.has(command.meta!.name)) this.cooldowns.set(command.meta!.name, new Collection());
         const now = Date.now();
