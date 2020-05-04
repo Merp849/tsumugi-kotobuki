@@ -25,9 +25,9 @@ export default class HelpCommand extends BaseCommand {
             .setTimestamp();
             for (const cat of this.client.helpMeta.array().sort((a, b) => a.name.localeCompare(b.name))) {
                 if (cat.hide && message.author.isDev) {
-                    embed.addField(cat.name, cat.cmds.map(c => `\`${c}\``).join(', '));
+                    embed.addField(cat.name, cat.cmds.map(c => `\`${c}\``).join(", "));
                 }
-                embed.addField(cat.name, cat.cmds.map(c => `\`${c}\``).join(', '));
+                embed.addField(cat.name, cat.cmds.map(c => `\`${c}\``).join(", "));
             }
             return message.channel.send(embed);
         } else {
@@ -37,7 +37,7 @@ export default class HelpCommand extends BaseCommand {
             const example = cmd.meta!.example ? `Still don't know? Okay, here the example: \`${this.client.config.prefix}${cmd.meta!.example}\`` : "No example provided for this command.";
             const description = cmd.meta!.description ? cmd.meta!.description : "No description provided for this command.";
             const alias = cmd.meta!.alias!.length === 0 ? "No alias provided for this command." : `You can use this command with: ${cmd.meta!.alias!.map(a => `\`${a}\``).join(", ")}`
-            const cooldown = cmd.meta!.cooldown ? `You just need wait \`${cmd.meta!.cooldown}\` second(s) after using this command!` : `No cooldown provided, You're free!`;
+            const cooldown = cmd.meta!.cooldown ? `You just need wait \`${cmd.meta!.cooldown}\` second(s) after using this command!` : "No cooldown provided, You're free!";
             const embed = new MessageEmbed()
             .setAuthor("📁 Advanced Help Command")
             .setDescription(`
