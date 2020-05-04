@@ -41,4 +41,4 @@ yarn install --ignore-optional
 2. Install all of dependencies.
 3. Change all of credentials to your credentials in `src/config.json`
 4. Run `npm run build` or `yarn run build` if you're using yarn
-5. Start it with `npm run start:dev`!
+5. Start it with `npm run start:env`!
