@@ -8,14 +8,6 @@ export default class BaseCommand implements CommandComponent {
     constructor(public client: BotClient, public meta: MetaCommand) { }
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     public run(message: IMessage): any {}
-    public reload(): CommandComponent {
-        require(`${this.meta.path}`).default;
-        const cmd = this.client.commands.get(this.meta.name);
-        const newCMD: CommandComponent = new (require(`${this.meta.path}`).default)(this.client, cmd!.meta);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
-        this.client.commands.get(this.meta.name)!.run = newCMD.run;
-        return this.client.commands.get(this.meta.name)!;
-    }
     public invalid(msg: IMessage, reason: string): Promise<IMessage> {
         const usage = this.meta.usage ? `${this.meta.usage.replace(new RegExp("{prefix}", "g"), `**${msg.guild ? msg.guild.config.prefix : msg.client.config.prefix}**`)}` : "No usage provided.";
         const example = this.meta.example ? `${this.meta.example.replace(new RegExp("{prefix}", "g"), `**${msg.guild ? msg.guild.config.prefix : msg.client.config.prefix}**`)}` : "No example provided.";
