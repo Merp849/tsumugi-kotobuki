@@ -40,10 +40,10 @@ export default class Commands {
                     files.forEach(file => {
                         if (!file.endsWith(".js")) return undefined;
                         require(`${this.path}/${category}/${file}`).default;
-                        const cmd = commands.get(file.split('Command')[0].toLowerCase());
+                        const cmd = commands.get(file.split("Command")[0].toLowerCase());
                         if (!cmd) {
                             const errr = new Error();
-                            errr.name = 'ANOMALY_COMMAND_FILENAME';
+                            errr.name = "ANOMALY_COMMAND_FILENAME";
                             errr.message = `[${file}] command file is not found in ${resolve(__dirname, `../commands/${category}/${file}`)}`;
                             throw errr;
                         }

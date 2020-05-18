@@ -15,7 +15,7 @@ export default class PingCommand extends BaseCommand {
     async run(message: IMessage): Promise<void> {
         const startTime = Date.now();
         return message.channel
-        .send(':ping_pong: | **Wait for some reason...**')
+        .send(":ping_pong: | **Wait for some reason...**")
         .then((msg: any) => {
             const diff = (Date.now() - startTime).toLocaleString();
             const api = this.client.ws.ping.toFixed(0);
