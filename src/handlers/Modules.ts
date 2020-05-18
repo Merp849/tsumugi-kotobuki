@@ -65,12 +65,35 @@ export default class Commands {
 
 export function Command(value: MetaCommand) {
     return function (target: any) {
-        const disabledCommands: string[] = [];
-        if (value.disabled) disabledCommands.push(value.name);
-        if (disabledCommands.length !== 0) log.info(`There are ${disabledCommands.length} command(s) disabled.`);
-        value.alias!.forEach(alias => {
-            aliases.set(alias, value.name);
-        });
-        commands.set(value.name, { run: new target(undefined, value), meta: value });
+        if (commands.has(value.name)) {
+            delete require.cache[require.resolve(`${value.path}`)];
+            const cmd = commands.get(value.name)!;
+            const newCMD: CommandComponent = new (require(cmd.meta!.path!).default)(undefined, {
+                name: value.name,
+                description: value.description,
+                alias: value.alias,
+                cooldown: value.cooldown,
+                usage: value.usage,
+                example: value.example,
+                ownerOnly: value.ownerOnly,
+                disabled: value.disabled,
+                path: cmd.meta!.path,
+                category: cmd.meta!.category
+            });
+            console.log(newCMD.meta);
+            commands.set(value.name, newCMD);
+            value.alias!.forEach(alias => {
+                aliases.set(alias, value.name);
+            });
+            log.info(`Reloaded ${value.name} command!`);
+        } else {
+            const disabledCommands: string[] = [];
+            if (value.disabled) disabledCommands.push(value.name);
+            if (disabledCommands.length !== 0) log.info(`There are ${disabledCommands.length} command(s) disabled.`);
+            value.alias!.forEach(alias => {
+                aliases.set(alias, value.name);
+            });
+            commands.set(value.name, { run: new target(undefined, value), meta: value });
+        }
     };
 }

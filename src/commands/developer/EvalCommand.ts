@@ -1,7 +1,8 @@
 import { Command } from "../../handlers/Modules";
 import BaseCommand from "../../structures/BaseCommand";
-import { IMessage } from "../../typings";
+import { IMessage, MetaCommand } from "../../typings";
 import { MessageEmbed } from "discord.js";
+import BotClient from "../../handlers/Client";
 
 @Command({
     name: "eval",
@@ -9,8 +10,9 @@ import { MessageEmbed } from "discord.js";
     ownerOnly: true
 })
 export default class EvalCommand extends BaseCommand {
+    constructor(public client: BotClient, public meta: MetaCommand) { super(client, meta); }
     async run(message: IMessage): Promise<IMessage | void> {
-        if (!this.client.config.devs.includes(message.author.id)) return;
+        if (!message.author.isDev) return;
         const msg = message; 
         const bot = this.client;
         const client = this.client;

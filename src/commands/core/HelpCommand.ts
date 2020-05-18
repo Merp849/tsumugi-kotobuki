@@ -1,7 +1,8 @@
 import BaseCommand from "../../structures/BaseCommand";
 import { Command } from "../../handlers/Modules";
-import { IMessage } from "../../typings";
+import { IMessage, MetaCommand } from "../../typings";
 import { MessageEmbed } from "discord.js";
+import BotClient from "../../handlers/Client";
 
 @Command({
     name: "help",
@@ -14,6 +15,7 @@ import { MessageEmbed } from "discord.js";
     disabled: false
 })
 export default class HelpCommand extends BaseCommand {
+    constructor(public client: BotClient, public meta: MetaCommand) { super(client, meta); }
     run(message: IMessage): Promise<IMessage> {
         if (!message.args[0]) {
             const embed = new MessageEmbed()

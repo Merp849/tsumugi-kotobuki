@@ -1,6 +1,7 @@
-import { IMessage } from "../../typings";
+import { IMessage, MetaCommand } from "../../typings";
 import { Command } from "../../handlers/Modules";
 import BaseCommand from "../../structures/BaseCommand";
+import BotClient from "../../handlers/Client";
 
 @Command({
     name: "ping",
@@ -10,6 +11,7 @@ import BaseCommand from "../../structures/BaseCommand";
     disabled: false
 })
 export default class PingCommand extends BaseCommand {
+    constructor(public client: BotClient, public meta: MetaCommand) { super(client, meta); }
     async run(message: IMessage): Promise<void> {
         const startTime = Date.now();
         return message.channel
