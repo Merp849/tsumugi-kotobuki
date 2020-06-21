@@ -35,7 +35,7 @@
     "dotenv": "^8.2.0",
     "erlpack": "github:discordapp/erlpack",
     "utf-8-validate": "^5.0.2",
-    "zlib-sync": "^0.1.6"
+    "zlib-sync": "^0.1.7"
   },
   "devDependencies": {
     "@types/node": "^14.0.13",
